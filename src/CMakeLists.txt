@@ -90,6 +90,16 @@ set_property(TARGET ${LIB_NAME} PROPERTY C_STANDARD 11)
 #target_link_extlibraries(${LIB_NAME})
 target_link_libraries(${LIB_NAME} android log jnigraphics EGL GLESv2)
 
+
+# strip so-files
+include(CMakeFindBinUtils)
+
+if (STRIP_NGS_LIBS AND CMAKE_LIBRARY_OUTPUT_DIRECTORY AND (UNIX OR CYGWIN OR MINGW))
+    add_custom_command(TARGET ${LIB_NAME} POST_BUILD
+        COMMAND ${CMAKE_STRIP} --strip-unneeded ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/*.so)
+endif()
+
+
 set(TARGET_LINK_LIB ${TARGET_LINK_LIB} ${LIB_NAME} PARENT_SCOPE)
 set(DEPENDENCY_LIB ${DEPENDENCY_LIB} ${LIB_NAME} PARENT_SCOPE)
 set(LINK_SEARCH_PATHS ${LINK_SEARCH_PATHS} PARENT_SCOPE)
