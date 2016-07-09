@@ -25,7 +25,7 @@
 
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 
-set(NGSTORE_PROJECT_NAME ngstore)
+set(NGSTORE_PROJECT_NAME "ngstore")
 
 if (NGSTORE_PROJECT_NAME)
     add_subdirectory(../libngstore libngstore)

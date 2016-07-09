@@ -6,9 +6,28 @@
 #include <GLES2/gl2.h>
 #include <EGL/egl.h>
 
+#include "StdoutsToLogcatRedirector.h"
+
+
+// https://developer.android.com/training/articles/perf-jni.html#faq_ULE
+// http://stackoverflow.com/a/2480564
+// http://stackoverflow.com/a/17643762
+// if your native file is compiled as C++ you would need extern "C" {...}
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+JNIEXPORT jboolean JNICALL Java_com_nextgis_store_NgsCoreAndroid_initLogger(
+        JNIEnv* env,
+        jclass type)
+{
+    return ngs::StdoutsToLogcatRedirector::init();
+}
+
 
 // http://stackoverflow.com/a/22693766
-extern "C" jlong Java_com_nextgis_store_NgsCoreAndroid_lockBitmapPixels(
+JNIEXPORT jlong JNICALL Java_com_nextgis_store_NgsCoreAndroid_lockBitmapPixels(
         JNIEnv* env,
         jclass type,
         jobject bitmap)
@@ -24,15 +43,13 @@ extern "C" jlong Java_com_nextgis_store_NgsCoreAndroid_lockBitmapPixels(
     return reinterpret_cast<jlong> (pPixels);
 }
 
-
-extern "C" void Java_com_nextgis_store_NgsCoreAndroid_unlockBitmapPixels(
+JNIEXPORT void JNICALL Java_com_nextgis_store_NgsCoreAndroid_unlockBitmapPixels(
         JNIEnv* env,
         jclass type,
         jobject bitmap)
 {
     AndroidBitmap_unlockPixels(env, bitmap);
 }
-
 
 bool renderer(
         void* imagePtr,
@@ -121,8 +138,7 @@ bool renderer(
     return true;
 }
 
-
-extern "C" jboolean Java_com_nextgis_store_NgsCoreAndroid_fillImage(
+JNIEXPORT jboolean JNICALL Java_com_nextgis_store_NgsCoreAndroid_fillImage(
         JNIEnv* env,
         jclass type,
         jlong imagePointer,
@@ -132,3 +148,8 @@ extern "C" jboolean Java_com_nextgis_store_NgsCoreAndroid_fillImage(
     void* imagePtr = reinterpret_cast<void*> (imagePointer);
     return renderer(imagePtr, imageWidth, imageHeight);
 }
+
+
+#ifdef __cplusplus
+}
+#endif

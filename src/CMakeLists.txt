@@ -26,13 +26,15 @@
 option (BUILD_SHARED_LIBS "Build as dynamic library" ON)
 
 set(HHEADERS
+    StdoutsToLogcatRedirector.h
 )
 
 set(HHEADER_PRIV
 )
 
 set(CSOURCES
-    ngscoreandroid.cpp
+    NgsCoreAndroid.cpp
+    StdoutsToLogcatRedirector.cpp
 )
 
 if(UNIX)
