@@ -77,7 +77,7 @@ namespace ngs
             return false;
         }
         LOG("-NGS- NgsLogger init %s", "finished");
-        std::cout << "NgsLogger is OK" << std::endl;
+        std::cout << "NgsLogger is ready" << std::endl;
         return true;
     }
 }
