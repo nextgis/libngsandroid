@@ -23,7 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-option (BUILD_SHARED_LIBS "Build as dynamic library" ON)
+option(BUILD_SHARED_LIBS "Build as dynamic library" ON)
+
+if (NGSTORE_PROJECT_NAME)
+    include_directories("${NGSTORE_PROJECT_PATH}/src" "${NGSTORE_PROJECT_PATH}/build/gen/bindings")
+endif()
+
 
 set(HHEADERS
     StdoutsToLogcatRedirector.h
@@ -36,6 +41,13 @@ set(CSOURCES
     NgsCoreAndroid.cpp
     StdoutsToLogcatRedirector.cpp
 )
+
+if (NGSTORE_PROJECT_NAME)
+    list(APPEND CSOURCES
+        "${NGSTORE_PROJECT_PATH}/build/gen/bindings/api_wrap.cpp"
+    )
+endif()
+
 
 if(UNIX)
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -ffunction-sections -Wl,--gc-sections -fno-asynchronous-unwind-tables -Wl,--strip-all")

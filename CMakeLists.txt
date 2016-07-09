@@ -25,13 +25,6 @@
 
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 
-set(NGSTORE_PROJECT_NAME "ngstore")
-
-if (NGSTORE_PROJECT_NAME)
-    add_subdirectory(../libngstore libngstore)
-endif()
-
-
 # some init settings
 set(CMAKE_COLOR_MAKEFILE ON)
 # set path to additional CMake modules
@@ -45,6 +38,15 @@ set_property(CACHE BUILD_TARGET_PLATFORM PROPERTY STRINGS "ANDROID" "IOS" "Deskt
 include(android)
 
 project(ngsandroid)
+
+
+set(NGSTORE_PROJECT_NAME "ngstore")
+if (NGSTORE_PROJECT_NAME)
+    set(NGSTORE_PROJECT_DIR "libngstore")
+    set(NGSTORE_PROJECT_PATH "${PROJECT_SOURCE_DIR}/../${NGSTORE_PROJECT_DIR}")
+    add_subdirectory(${NGSTORE_PROJECT_PATH} ${NGSTORE_PROJECT_DIR})
+endif()
+
 
 # TODO: remove it
 include(GNUInstallDirs)
