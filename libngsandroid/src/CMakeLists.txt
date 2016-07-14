@@ -25,11 +25,6 @@
 
 option(BUILD_SHARED_LIBS "Build as dynamic library" ON)
 
-if (NGSTORE_PROJECT_NAME)
-    include_directories("${ngstore_SOURCE_DIR}/src" "${ngstore_SOURCE_DIR}/build/gen/bindings")
-endif()
-
-
 set(HHEADERS
     StdoutsToLogcatRedirector.h
 )
@@ -41,12 +36,6 @@ set(CSOURCES
     NgsAndroidJni.cpp
     StdoutsToLogcatRedirector.cpp
 )
-
-if (NGSTORE_PROJECT_NAME)
-    list(APPEND CSOURCES
-        "${ngstore_BINARY_DIR}/bindings/api_wrap.cpp"
-    )
-endif()
 
 
 if(UNIX)
@@ -71,17 +60,9 @@ if(BUILD_SHARED_LIBS)
     set (LIB_VERSION ${VERSION})
     set_target_properties (${LIB_NAME} PROPERTIES VERSION ${LIB_VERSION})
     set_target_properties (${LIB_NAME} PROPERTIES SOVERSION ${SOVERSION})
-    set_target_properties (${LIB_NAME} PROPERTIES DEFINE_SYMBOL NGSTOR_EXPORTS)
-    if (NGSTORE_PROJECT_NAME)
-        add_dependencies(${LIB_NAME} ${NGSTORE_PROJECT_NAME})
-        target_link_libraries(${LIB_NAME} ${NGSTORE_PROJECT_NAME})
-    endif()
+#    set_target_properties (${LIB_NAME} PROPERTIES DEFINE_SYMBOL NGSTOR_EXPORTS)
 else()
-    set_target_properties (${LIB_NAME} PROPERTIES DEFINE_SYMBOL NGSTOR_STATIC)
-    if (NGSTORE_PROJECT_NAME)
-        add_dependencies(${LIB_NAME} ${NGSTORE_PROJECT_NAME}static)
-        target_link_libraries(${LIB_NAME} ${NGSTORE_PROJECT_NAME}static)
-    endif()
+#    set_target_properties (${LIB_NAME} PROPERTIES DEFINE_SYMBOL NGSTOR_STATIC)
 endif()
 
 set_property(TARGET ${LIB_NAME} PROPERTY CXX_STANDARD 11)
@@ -106,7 +87,7 @@ set(LINK_SEARCH_PATHS ${LINK_SEARCH_PATHS} PARENT_SCOPE)
 set(WITHOPT ${WITHOPT} PARENT_SCOPE)
 set(EXPORTS_PATHS ${EXPORTS_PATHS} PARENT_SCOPE)
 
-if(NOT SKIP_INSTALL_LIBRARIES AND NOT SKIP_INSTALL_ALL )
+if(NOT SKIP_INSTALL_LIBRARIES AND NOT SKIP_INSTALL_ALL)
     install(TARGETS ${LIB_NAME}
         EXPORT ${LIB_NAME}
         RUNTIME DESTINATION ${INSTALL_BIN_DIR} COMPONENT libraries

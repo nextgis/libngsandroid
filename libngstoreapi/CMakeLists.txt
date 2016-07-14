@@ -37,25 +37,19 @@ set_property(CACHE BUILD_TARGET_PLATFORM PROPERTY STRINGS "ANDROID" "IOS" "Deskt
 
 include(android)
 
-project(ngsmaker)
+
+project(ngstoreapi)
+
+set(NGSTORE_PROJECT_NAME "ngstore")
+set(NGSTORE_PROJECT_DIR "libngstore")
+set(NGSTORE_PROJECT_PATH "${PROJECT_SOURCE_DIR}/../../${NGSTORE_PROJECT_DIR}")
+add_subdirectory(${NGSTORE_PROJECT_PATH} ${NGSTORE_PROJECT_DIR})
 
 
-set(NGSTOREAPI_PROJECT_NAME "ngstoreapi")
-set(NGSTOREAPI_PROJECT_DIR "libngstoreapi")
-set(NGSTOREAPI_PROJECT_PATH "${PROJECT_SOURCE_DIR}/${NGSTOREAPI_PROJECT_DIR}")
-add_subdirectory(${NGSTOREAPI_PROJECT_PATH} ${NGSTOREAPI_PROJECT_DIR})
-
-set(NGSANDROID_PROJECT_NAME "ngsandroid")
-set(NGSANDROID_PROJECT_DIR "libngsandroid")
-set(NGSANDROID_PROJECT_PATH "${PROJECT_SOURCE_DIR}/${NGSANDROID_PROJECT_DIR}")
-add_subdirectory(${NGSANDROID_PROJECT_PATH} ${NGSANDROID_PROJECT_DIR})
-
-
-# TODO: remove it
 include(GNUInstallDirs)
 set(INSTALL_BIN_DIR ${CMAKE_INSTALL_BINDIR} CACHE INTERNAL "Installation directory for executables" FORCE)
 set(INSTALL_LIB_DIR ${CMAKE_INSTALL_LIBDIR} CACHE INTERNAL "Installation directory for libraries" FORCE)
-set(INSTALL_INC_DIR ${CMAKE_INSTALL_INCLUDEDIR}/ngstore CACHE INTERNAL "Installation directory for headers" FORCE)
+set(INSTALL_INC_DIR ${CMAKE_INSTALL_INCLUDEDIR}/${NGSTORE_PROJECT_NAME} CACHE INTERNAL "Installation directory for headers" FORCE)
 
 if(CMAKE_BUILD_TYPE STREQUAL Debug)
   add_definitions(-D_DEBUG)
@@ -76,7 +70,7 @@ enable_testing()
 #include(FindAnyProject)
 
 #add_subdirectory(bindings)
-#add_subdirectory(src)
+add_subdirectory(src)
 #add_subdirectory(test)
 
 # uninstall
