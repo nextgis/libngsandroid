@@ -26,7 +26,7 @@
 option(BUILD_SHARED_LIBS "Build as dynamic library" ON)
 
 if (NGSTORE_PROJECT_NAME)
-    include_directories("${NGSTORE_PROJECT_PATH}/src" "${NGSTORE_PROJECT_PATH}/build/gen/bindings")
+    include_directories("${ngstore_SOURCE_DIR}/src" "${ngstore_SOURCE_DIR}/build/gen/bindings")
 endif()
 
 
@@ -38,13 +38,13 @@ set(HHEADER_PRIV
 )
 
 set(CSOURCES
-    NgsCoreAndroid.cpp
+    NgsAndroidJni.cpp
     StdoutsToLogcatRedirector.cpp
 )
 
 if (NGSTORE_PROJECT_NAME)
     list(APPEND CSOURCES
-        "${NGSTORE_PROJECT_PATH}/build/gen/bindings/api_wrap.cpp"
+        "${ngstore_BINARY_DIR}/bindings/api_wrap.cpp"
     )
 endif()
 

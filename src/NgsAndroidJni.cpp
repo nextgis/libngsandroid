@@ -18,7 +18,7 @@ extern "C" {
 #endif
 
 
-JNIEXPORT jboolean JNICALL Java_com_nextgis_store_NgsCoreAndroid_initLogger(
+JNIEXPORT jboolean JNICALL Java_com_nextgis_ngsandroid_NgsAndroidJni_initLogger(
         JNIEnv* env,
         jclass type)
 {
@@ -27,7 +27,7 @@ JNIEXPORT jboolean JNICALL Java_com_nextgis_store_NgsCoreAndroid_initLogger(
 
 
 // http://stackoverflow.com/a/22693766
-JNIEXPORT jlong JNICALL Java_com_nextgis_store_NgsCoreAndroid_lockBitmapPixels(
+JNIEXPORT jlong JNICALL Java_com_nextgis_ngsandroid_NgsAndroidJni_lockBitmapPixels(
         JNIEnv* env,
         jclass type,
         jobject bitmap)
@@ -43,7 +43,7 @@ JNIEXPORT jlong JNICALL Java_com_nextgis_store_NgsCoreAndroid_lockBitmapPixels(
     return reinterpret_cast<jlong> (pPixels);
 }
 
-JNIEXPORT void JNICALL Java_com_nextgis_store_NgsCoreAndroid_unlockBitmapPixels(
+JNIEXPORT void JNICALL Java_com_nextgis_ngsandroid_NgsAndroidJni_unlockBitmapPixels(
         JNIEnv* env,
         jclass type,
         jobject bitmap)
@@ -138,7 +138,7 @@ bool renderer(
     return true;
 }
 
-JNIEXPORT jboolean JNICALL Java_com_nextgis_store_NgsCoreAndroid_fillImage(
+JNIEXPORT jboolean JNICALL Java_com_nextgis_ngsandroid_NgsAndroidJni_fillImage(
         JNIEnv* env,
         jclass type,
         jlong imagePointer,
