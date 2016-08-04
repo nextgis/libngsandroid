@@ -23,8 +23,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-option(BUILD_SHARED_LIBS "Build as dynamic library" ON)
-
 include_directories("${ngstore_SOURCE_DIR}/src")
 
 set(HHEADERS
