@@ -37,6 +37,8 @@ set(CSOURCES
 
 
 if(UNIX)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -ffunction-sections -Wl,--gc-sections -fno-asynchronous-unwind-tables -Wl,--strip-all")
     set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -ffunction-sections -Wl,--gc-sections -fno-asynchronous-unwind-tables -Wl,--strip-all")
 endif()
@@ -50,7 +52,7 @@ else()
     set(LIB_NAME ${PROJECT_NAME}static)
 endif()
 
-add_definitions(-DNGM_ABI="Android ${ANDROID_ABI}")
+add_definitions(-DNGS_ABI="Android ${ANDROID_ABI}")
 
 add_library(${LIB_NAME} ${LIB_TYPE} ${CSOURCES} ${HHEADERS} ${HHEADER_PRIV})
 
