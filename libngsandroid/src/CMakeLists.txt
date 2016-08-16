@@ -69,7 +69,7 @@ set_property(TARGET ${LIB_NAME} PROPERTY CXX_STANDARD 11)
 set_property(TARGET ${LIB_NAME} PROPERTY C_STANDARD 11)
 
 #target_link_extlibraries(${LIB_NAME})
-target_link_libraries(${LIB_NAME} android log jnigraphics EGL GLESv2)
+target_link_libraries(${LIB_NAME} android log jnigraphics)
 
 
 # strip so-files
