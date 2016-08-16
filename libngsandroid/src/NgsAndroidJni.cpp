@@ -55,6 +55,10 @@ JNIEXPORT jobject JNICALL Java_com_nextgis_ngsandroid_NgsAndroidJni_fillBitmapFr
         jint width,
         jint height)
 {
+// https://github.com/AndroidDeveloperLB/AndroidJniBitmapOperations
+// http://stackoverflow.com/questions/18250951/jni-bitmap-operations-for-helping-to-avoid-oom-when-using-large-images
+// http://stackoverflow.com/questions/17900732/how-to-cache-bitmaps-into-native-memory
+
     void* p_buffer = env->GetDirectBufferAddress(buffer);
 
     // creating a new bitmap to put the pixels into it
