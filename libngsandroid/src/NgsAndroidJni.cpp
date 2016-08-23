@@ -48,18 +48,12 @@ JNIEXPORT void JNICALL Java_com_nextgis_ngsandroid_NgsAndroidJni_unlockBitmapPix
     AndroidBitmap_unlockPixels(env, bitmap);
 }
 
-JNIEXPORT jobject JNICALL Java_com_nextgis_ngsandroid_NgsAndroidJni_fillBitmapFromBuffer(
+jobject createBitmap(
         JNIEnv* env,
-        jclass type,
-        jobject buffer,
         jint width,
         jint height)
 {
 // https://github.com/AndroidDeveloperLB/AndroidJniBitmapOperations
-// http://stackoverflow.com/questions/18250951/jni-bitmap-operations-for-helping-to-avoid-oom-when-using-large-images
-// http://stackoverflow.com/questions/17900732/how-to-cache-bitmaps-into-native-memory
-
-    void* p_buffer = env->GetDirectBufferAddress(buffer);
 
     // creating a new bitmap to put the pixels into it
     // using Bitmap Bitmap.createBitmap (int width, int height, Bitmap.Config config)
@@ -73,8 +67,23 @@ JNIEXPORT jobject JNICALL Java_com_nextgis_ngsandroid_NgsAndroidJni_fillBitmapFr
     jstring configName = env->NewStringUTF("ARGB_8888");
     jobject bitmapConfig =
             env->CallStaticObjectMethod(classBitmapConfig, methodValueOf, configName);
-    jobject bitmap = env->CallStaticObjectMethod(
+    return env->CallStaticObjectMethod(
             classBitmap, methodCreateBitmap, width, height, bitmapConfig);
+}
+
+JNIEXPORT jobject JNICALL Java_com_nextgis_ngsandroid_NgsAndroidJni_createBitmapFromBuffer(
+        JNIEnv* env,
+        jclass type,
+        jobject buffer,
+        jint width,
+        jint height)
+{
+// https://github.com/AndroidDeveloperLB/AndroidJniBitmapOperations
+// http://stackoverflow.com/questions/18250951/jni-bitmap-operations-for-helping-to-avoid-oom-when-using-large-images
+// http://stackoverflow.com/questions/17900732/how-to-cache-bitmaps-into-native-memory
+
+    void* p_buffer = env->GetDirectBufferAddress(buffer);
+    jobject bitmap = createBitmap(env, width, height);
 
     // putting the pixels into the new bitmap:
     int ret;
